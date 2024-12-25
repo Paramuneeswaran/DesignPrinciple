@@ -65,3 +65,39 @@ class Program
         doc.Write();
     }
 }
+
+
+violate the depandancy injection principle of below example 
+
+class Program
+{
+    static void Main()
+    {
+        ReadWriteDocument readWriteDoc = new ReadWriteDocument
+        {
+            Title = "ReadWrite Example",
+            Content = "This is a read/write document."
+        };
+
+        PdfDocument pdfDoc = new PdfDocument
+        {
+            Title = "PDF Example",
+            Content = "This is a PDF document."
+        };
+
+        PerformDocumentOperations(readWriteDoc);
+        PerformDocumentOperations(pdfDoc);
+    }
+
+    static void PerformDocumentOperations(ReadWriteDocument doc)
+    {
+        doc.Read();
+        doc.Write();
+    }
+
+    static void PerformDocumentOperations(PdfDocument doc)
+    {
+        doc.Read();
+        doc.Write();
+    }
+}
