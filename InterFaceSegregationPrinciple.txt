@@ -1,0 +1,90 @@
+public interface IPrinter
+{
+    void Print(string document);
+}
+
+public interface IScanner
+{
+    void Scan(string document);
+}
+
+
+public class Printer : IPrinter
+{
+    public void Print(string document)
+    {
+        Console.WriteLine($"Printing document: {document}");
+    }
+}
+
+
+public class Scanner : IScanner
+{
+    public void Scan(string document)
+    {
+        Console.WriteLine($"Scanning document: {document}");
+    }
+}
+
+
+public class MultiFunctionPrinter : IPrinter, IScanner
+{
+    public void Print(string document)
+    {
+        Console.WriteLine($"Printing document: {document}");
+    }
+
+    public void Scan(string document)
+    {
+        Console.WriteLine($"Scanning document: {document}");
+    }
+}
+
+
+class Program
+{
+    static void Main()
+    {
+        IPrinter printer = new Printer();
+        IScanner scanner = new Scanner();
+        MultiFunctionPrinter multiFunctionPrinter = new MultiFunctionPrinter();
+
+        PerformPrintOperation(printer, "Document1");
+        PerformScanOperation(scanner, "Document2");
+        PerformPrintOperation(multiFunctionPrinter, "Document3");
+        PerformScanOperation(multiFunctionPrinter, "Document4");
+    }
+
+    static void PerformPrintOperation(IPrinter printer, string document)
+    {
+        printer.Print(document);
+    }
+
+    static void PerformScanOperation(IScanner scanner, string document)
+    {
+        scanner.Scan(document);
+    }
+}
+
+violate interface Segregation Principle
+
+class Program
+{
+    static void Main()
+    {
+        IDevice printer = new Printer();
+        IDevice scanner = new Scanner();
+        IDevice multiFunctionPrinter = new MultiFunctionPrinter();
+
+        PerformDeviceOperations(printer, "Document1");
+        PerformDeviceOperations(scanner, "Document2");
+        PerformDeviceOperations(multiFunctionPrinter, "Document3");
+    }
+
+    static void PerformDeviceOperations(IDevice device, string document)
+    {
+        device.Print(document);
+        device.Scan(document);
+    }
+}
+
