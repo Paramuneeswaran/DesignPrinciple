@@ -1,0 +1,67 @@
+public abstract class Document
+{
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public abstract void Read();
+    public abstract void Write();
+}
+
+
+public class ReadWriteDocument : Document
+{
+    public override void Read()
+    {
+        Console.WriteLine($"Reading Document: {Title}");
+        // Logic to read the document
+    }
+
+    public override void Write()
+    {
+        Console.WriteLine($"Writing Document: {Title}");
+        // Logic to write the document
+    }
+}
+
+public class PdfDocument : Document
+{
+    public override void Read()
+    {
+        Console.WriteLine($"Reading PDF Document: {Title}");
+        // Logic to read the PDF document
+    }
+
+    public override void Write()
+    {
+        // PDF documents are typically read-only, but we'll provide a no-op implementation
+        Console.WriteLine("PDF documents cannot be written.");
+    }
+}
+
+
+class Program
+{
+    static void Main()
+    {
+        Document readWriteDoc = new ReadWriteDocument
+        {
+            Title = "ReadWrite Example",
+            Content = "This is a read/write document."
+        };
+
+        Document pdfDoc = new PdfDocument
+        {
+            Title = "PDF Example",
+            Content = "This is a PDF document."
+        };
+
+        PerformDocumentOperations(readWriteDoc);
+        PerformDocumentOperations(pdfDoc);
+    }
+
+    static void PerformDocumentOperations(Document doc)
+    {
+        doc.Read();
+        doc.Write();
+    }
+}
