@@ -1,0 +1,91 @@
+public interface IPrinter
+{
+    void Print(string document);
+}
+
+public interface IScanner
+{
+    void Scan(string document);
+}
+
+public class Printer : IPrinter
+{
+    public void Print(string document)
+    {
+        Console.WriteLine($"Printing document: {document}");
+    }
+}
+
+public class Scanner : IScanner
+{
+    public void Scan(string document)
+    {
+        Console.WriteLine($"Scanning document: {document}");
+    }
+}
+
+public class MultiFunctionPrinter : IPrinter, IScanner
+{
+    public void Print(string document)
+    {
+        Console.WriteLine($"Printing document: {document}");
+    }
+
+    public void Scan(string document)
+    {
+        Console.WriteLine($"Scanning document: {document}");
+    }
+}
+
+
+class Program
+{
+    static void Main()
+    {
+        IPrinter printer = new Printer();
+        IScanner scanner = new Scanner();
+        MultiFunctionPrinter multiFunctionPrinter = new MultiFunctionPrinter();
+
+        PerformPrintOperation(printer, "Document1");
+        PerformScanOperation(scanner, "Document2");
+        PerformPrintOperation(multiFunctionPrinter, "Document3");
+        PerformScanOperation(multiFunctionPrinter, "Document4");
+    }
+
+    static void PerformPrintOperation(IPrinter printer, string document)
+    {
+        printer.Print(document);
+    }
+
+    static void PerformScanOperation(IScanner scanner, string document)
+    {
+        scanner.Scan(document);
+    }
+}
+
+Violate liskov substitution principle
+
+class Program
+{
+    static void Main()
+    {
+        IPrinter printer = new Printer();
+        IScanner scanner = new Scanner();
+        IPrinter multiFunctionPrinter = new MultiFunctionPrinter(); // Only using IPrinter interface
+
+        PerformPrintOperation(printer, "Document1");
+        PerformScanOperation(scanner, "Document2");
+        PerformPrintOperation(multiFunctionPrinter, "Document3");
+        PerformScanOperation((IScanner)multiFunctionPrinter, "Document4"); // This will throw an exception
+    }
+
+    static void PerformPrintOperation(IPrinter printer, string document)
+    {
+        printer.Print(document);
+    }
+
+    static void PerformScanOperation(IScanner scanner, string document)
+    {
+        scanner.Scan(document);
+    }
+}
